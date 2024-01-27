@@ -12,6 +12,9 @@
   object-fit: cover;
   z-index: 1;
   border-radius: 50%;
+  background-position: center;
+  background-size: cover;
+  color:transparent;
 }
 
 .profile__avatar-overlay:hover{
