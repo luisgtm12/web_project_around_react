@@ -1,6 +1,6 @@
 ## Web_project_around_react
 
-##Enlace a [GitHudPages](https://luisgtm12.github.io/web_project_around_react/).
+## Enlace a [GitHudPages](https://luisgtm12.github.io/web_project_around_react/).
 
 ## Getting Started with Create React App
 
