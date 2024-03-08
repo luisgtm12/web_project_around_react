@@ -22,11 +22,13 @@ class Api {
     return fetch(`${this._baseUrl}/cards`, {
       headers:this._headers,
     })
-    .then((res)=> res.json())
-    .then((result)=>{
-      
-      return result;
-    }).catch((error) => {
+    .then((res)=> {
+      if (res.ok){
+        
+        return res.json();
+      }
+    })
+    .catch((error) => {
       console.log(`Error: ${error}`);
     });
   }
@@ -37,9 +39,11 @@ class Api {
       headers: this._headers,
       body: JSON.stringify(data)
     })
-    .then(res=>res.json())
-    .then((result)=>{
-      return result;
+    .then((res)=> {
+      if (res.ok){
+        
+        return res.json();
+      }
     })
     .catch((error) => {
       console.log(`Error: ${error}`);
@@ -52,9 +56,11 @@ class Api {
       headers:this._headers,
       body:JSON.stringify(data)
     })
-    .then((res)=>res.json())
-    .then((result)=>{
-      return result;
+    .then((res)=> {
+      if (res.ok){
+        
+        return res.json();
+      }
     })
     .catch((error) => {
       console.log(`Error: ${error}`);
@@ -67,55 +73,37 @@ class Api {
       headers:this._headers,
       body:JSON.stringify(data)
     })
-    .then((res)=>res.json())
-    .then((result)=>{
-      
-      return result;
+    .then((res)=> {
+      if (res.ok){
+        
+        return res.json();
+      }
     })
     .catch((error) => {
       console.log(`Error: ${error}`);
     });
   }
 
-  addLike(cardId) {
-    return fetch(`${this._baseUrl}/cards/likes/${cardId}`, {
-      method: "PUT",
-      headers: this._headers,
-    })
-    .then((res) =>{
-      if (res.ok){
-        return res.json();
-      }
-      return Promise.reject(res.status);
-    } )
-      /*.then((result)=>{
-        console.log("resultado like",result)
-        return result
-      })*/
-      .catch((error) => {
-        console.log(`Error: ${error}`);
-      });
-  }
-
-  deleteLike(cardId) {
-    return fetch(`${this._baseUrl}/cards/likes/${cardId}`, {
-      method: "DELETE",
-      headers:this._headers,
-    })
-      .then((res) =>{
-        if (res.ok){
-          return res.json();
-        }
-        return Promise.reject(res.status);
-      } )
-      /*.then((result)=>{
-        console.log("resultado like",result)
-        return result
-      })*/
-
-      .catch((error) => {
-        console.log(`Error: ${error}`);
-      });
+  changeCardLikeStatus(cardId,isLiked){
+    if(isLiked){
+      return fetch(`${this._baseUrl}/cards/likes/${cardId}`, {
+        method: "DELETE",
+        headers:this._headers,
+      })
+        .then(this.returnResponse)
+        .catch((error) => {
+          console.log(`Error: ${error}`);
+        });
+    }else {
+      return fetch(`${this._baseUrl}/cards/likes/${cardId}`, {
+        method: "PUT",
+        headers: this._headers,
+      })
+      .then(this.returnResponse)
+        .catch((error) => {
+          console.log(`Error: ${error}`);
+        });
+    }
   }
 
   deleteCard(cardId){
@@ -123,10 +111,11 @@ class Api {
       method: "DELETE",
       headers:this._headers,
     })
-    .then(res=> res.json())
-    .then(result=>{
-      
-      return result
+    .then((res)=> {
+      if (res.ok){
+        
+        return res.json();
+      }
     })
     .catch((error) => {
       console.log(`Error: ${error}`);

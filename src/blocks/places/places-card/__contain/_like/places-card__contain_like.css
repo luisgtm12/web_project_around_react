@@ -17,6 +17,9 @@
   opacity: 0.4;
 }
 
+.places-card__contain_like_active{
+  background-image: url(/src/images/corazon-negro.png);
+}
 .black-heart {
   background-image: url(/src/images/corazon-negro.png);
 }
