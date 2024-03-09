@@ -1,6 +1,18 @@
+import { useContext, useRef, useState } from "react";
 import PopupWithForm from "./PopupWithForm.js";
+import { CurrentUserContext } from "../contexts/CurrentUserContext.js";
 
-function EditAvatarPopup({isOpen,onClose}){
+function EditAvatarPopup({isOpen,onClose,onUpdateAvatar}){
+  const currentUser = useContext(CurrentUserContext);
+  const avatarRef = useRef(currentUser?.avatar ?? "");
+
+  function handleSubmit(e){
+    e.preventDefault();
+    
+    onUpdateAvatar({
+      avatar: avatarRef.current.value,
+    });
+  }
   return(
     <PopupWithForm
           isOpen={isOpen}
@@ -8,7 +20,7 @@ function EditAvatarPopup({isOpen,onClose}){
           title={"Foto de perfil"}
           onClose={onClose}
         >
-          <form id="form-edit-photo" className="form" noValidate>
+          <form id="form-edit-photo" className="form" onSubmit={handleSubmit} noValidate>
             <input
               className="form__user-box"
               id="edit-photo-avatar"

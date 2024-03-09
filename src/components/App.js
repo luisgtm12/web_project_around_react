@@ -56,9 +56,15 @@ function App() {
     // Verifica una vez más si a esta tarjeta ya le han dado like
     const isLiked = card.likes.some(i => i._id === currentUser._id);
     
-    api.changeCardLikeStatus(card._id,isLiked).then((newCard)=>{
-      setCards((state)=> state.map((c)=> (c._id === card._id ? newCard : c)))
-    })
+    if(isLiked) {
+      api.deleteLike(card._id).then((newCard => {
+        setCards((state) => state.map((c) => c._id === card._id ? newCard : c));
+      }))
+    } else {
+      api.addLike(card._id).then((newCard => {
+        setCards((state) => state.map((c) => c._id === card._id ? newCard : c));
+      }))
+    }
   }
   
   function handleCardDelete(card){
@@ -71,6 +77,13 @@ function App() {
     api.updateProfile(data).then(()=>{setCurrentUser({...currentUser,...data});
     setIsEditProfilePopupOpen(false);
   })
+  }
+
+  function handleUpdateAvatar(data) {
+    api.updateAvatar(data).then((userData)=>{
+      setCurrentUser(userData);
+      setIsEditAvatarPopupOpen(false);
+    })
   }
 
   return (
@@ -96,6 +109,7 @@ function App() {
           <EditAvatarPopup
           isOpen={isEditAvatarPopupOpen}
           onClose={closePopups}
+          onUpdateAvatar={handleUpdateAvatar}
           />
           <EditProfilePopup
           isOpen={isEditProfilePopupOpen}
