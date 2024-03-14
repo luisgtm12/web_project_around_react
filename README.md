@@ -2,6 +2,18 @@
 
 ## Enlace a [GitHudPages](https://luisgtm12.github.io/web_project_around_react/).
 
+### Introduccion
+
+Alrededor de los Estados Unidos es un Update de nuestros Proyecto webproyect4, en el cual empezamos a trabajar con Javascript. En este proyecto lo que hicimos fue migrar el webproyect4 a React y a partir de ahi refactorizar el proyecto y crear componentes y conectarlas con la api.
+
+### Herramientas
+
+- React
+- Jsx
+- Metodo BEM
+- Css
+- Media Queries
+
 ## Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

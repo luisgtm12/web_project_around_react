@@ -6,6 +6,10 @@ function EditProfilePopup({isOpen,onClose,onUpdateUser}) {
   const currentUser = useContext(CurrentUserContext);
   const [name,setName] = useState("");
   const [description,setDescription] = useState("");
+  const [isSaveButtonDisabled, setIsSaveButtonDisabled] = useState(true);
+  const [nameError, setNameError] = useState("");
+  const [descriptionError, setDescriptionError] = useState("");
+
 
   useEffect(() => {
     // Reviso que el usuario en el contexto no sea `undefined`
@@ -15,11 +19,27 @@ function EditProfilePopup({isOpen,onClose,onUpdateUser}) {
     }
   }, [currentUser]);
 
-  function handleChange(evt) {
-    if (evt.target.name === "name") {
-      setName(evt.target.value);
-    }else  {
-      setDescription(evt.target.value);
+  useEffect(() => {
+    // Verificar si los campos de entrada están vacíos o no
+    setIsSaveButtonDisabled(!name || !description || name.length < 2 || description.length < 2);
+  }, [name, description]);
+
+  function handleOnChange(evt) {
+    const { name, value } = evt.target;
+    if (name === "name") {
+      setName(value);
+      if (value.length < 2) {
+        setNameError("El nombre debe tener al menos 2 caracteres");
+      } else {
+        setNameError("");
+      }
+    } else {
+      setDescription(value);
+      if (value.length < 2) {
+        setDescriptionError("La descripción debe tener al menos 2 caracteres");
+      } else {
+        setDescriptionError("");
+      }
     }
   }
 
@@ -47,32 +67,32 @@ function EditProfilePopup({isOpen,onClose,onUpdateUser}) {
     >
       <form id="form-profile" className="form" onSubmit={handleSubmit} noValidate>
         <input
-          onChange={name}
+          onChange={handleOnChange}
           className="form__user-box"
           id="user-name"
           type="text"
           placeholder="Nombre"
-          value="Jacques Cousteau"
           minLength="2"
           maxLength="40"
           name="name"
+          value={name}
           required
         />
-        <span className="user-name-error"></span>
+        <span className="user-name-error">{nameError}</span>
         <input
-          onChange={description}
+          onChange={handleOnChange}
           className="form__user-box"
           id="user-about"
           type="text"
           placeholder="Acerca de mi"
-          value="Explorador"
           minLength="2"
           maxLength="200"
           name="about"
+          value={description}
           required
         />
-        <span className="user-about-error"></span>
-        <button type="submit" className="form__button-submit">
+        <span className="user-about-error">{descriptionError}</span>
+        <button type="submit" className="form__button-submit" disabled={isSaveButtonDisabled}>
           Guardar
         </button>
       </form>

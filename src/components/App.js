@@ -85,6 +85,13 @@ function App() {
       setIsEditAvatarPopupOpen(false);
     })
   }
+  
+  function handleAddPlaceSubmit(card){
+    api.addCards(card).then((newCard)=>{
+      setCards([newCard,...cards]);
+      setIsAddPlacePopupOpen(false);
+    })
+  }
 
   return (
     <>
@@ -119,6 +126,7 @@ function App() {
           <AddPlacePopup
           isOpen={isAddPlacePopupOpen}
           onClose={closePopups}
+          onAddPlace={handleAddPlaceSubmit}
           />
           <ImagePopup
         title={selectCard?.name || ""}
